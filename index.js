@@ -14,6 +14,13 @@ let guesses = {}; // В реальности — заменить на БД
 async function getBTCPrice() {
   const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
   const data = await res.json();
+
+  console.log('Ответ Coingecko:', data); // <- вывод в консоль, поможет отладить
+
+  if (!data.bitcoin || typeof data.bitcoin.usd !== 'number') {
+    throw new Error('Структура ответа API изменилась или произошла ошибка');
+  }
+
   return data.bitcoin.usd;
 }
 
