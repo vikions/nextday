@@ -6,22 +6,21 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
+// Статическая раздача картинок из public/
 app.use(express.static('public'));
 
-let guesses = {}; // В реальности — заменить на БД
+// Редирект по требованиям Farcaster
+app.get('/.well-known/farcaster.json', (req, res) => {
+  res.redirect(307, 'https://api.farcaster.xyz/miniapps/hosted-manifest/0197923c-a43a-7b7e-5a57-4e5039917150');
+});
 
+// Обработка основного фрейма
 async function getBTCPrice() {
   const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
   const data = await res.json();
-
-  console.log('Ответ Coingecko:', data); // <- вывод в консоль, поможет отладить
-
   if (!data.bitcoin || typeof data.bitcoin.usd !== 'number') {
-    throw new Error('Структура ответа API изменилась или произошла ошибка');
+    throw new Error('Unexpected API response structure');
   }
-
   return data.bitcoin.usd;
 }
 
@@ -40,22 +39,28 @@ app.get('/', async (req, res) => {
         <meta property="fc:frame:button:3" content="Same" />
         <meta property="fc:frame:post_url" content="${process.env.BASE_URL}/frame" />
       </head>
+      <body style="font-family: sans-serif; text-align: center; margin-top: 2em;">
+        <h1>📈 BTC Price Game</h1>
+        <p>Today's BTC price: <strong>$${btcPrice}</strong></p>
+        <p>Open this in Warpcast to make your guess!</p>
+      </body>
     </html>
   `);
 });
 
 app.post('/frame', (req, res) => {
-  // Warpcast не передает форму как обычный HTML <form>, так что здесь можно позже добавить кастомную обработку через Farcaster подписанные сообщения
-  // Пока — просто отдаем фрейм ответа
   res.set('Content-Type', 'text/html');
   res.send(`
     <html>
       <head>
-        <meta property="og:title" content="✅ Принято!" />
-        <meta property="og:description" content="Мы сохранили твой прогноз!" />
+        <meta property="og:title" content="✅ Got it!" />
+        <meta property="og:description" content="Your guess has been recorded!" />
         <meta property="fc:frame" content="vNext" />
         <meta property="fc:frame:image" content="${process.env.BASE_URL}/thanks.png" />
       </head>
+      <body style="font-family: sans-serif; text-align: center; margin-top: 2em;">
+        <h1>Thanks for guessing!</h1>
+      </body>
     </html>
   `);
 });
