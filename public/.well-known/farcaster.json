@@ -1,0 +1,11 @@
+// index.js или app.js
+app.get('/.well-known/farcaster.json', (req, res) => {
+  res.redirect(307, 'https://api.farcaster.xyz/miniapps/hosted-manifest/0197923c-a43a-7b7e-5a57-4e5039917150');
+});
+{
+  "accountAssociation": {
+    "header": "eyJmaWQiOjk0OTkwMSwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweDk3RTEyMzc4Yzk0NWRmMjAwOUFCYzVGOENBZDZGZDRmOTFjQWRjMjIifQ",
+    "payload": "eyJkb21haW4iOiJuZXh0ZGF5LWZyYW1lLm9ucmVuZGVyLmNvbSJ9",
+    "signature": "MHg1ZGM3ZjIyM2IwN2JmMDcxYzBkNGRkNDc0NDVlYWU0NzE5MWU4NGQ0ZTIwOTVjZTgwM2YzMTFjYWQ1YjYyNGVmN2M1ZWRhMDQ5ZmNjNmMyNjdlZWYzODc3ZmVmZmQ0ZjkwYzRjOGJiZjE5ZDBhNTEyNmQ5ZTBiZTNjM2FmMzRiZDFj"
+  }
+}
