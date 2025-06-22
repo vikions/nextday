@@ -16,12 +16,24 @@ app.get('/.well-known/farcaster.json', (req, res) => {
 
 // Обработка основного фрейма
 async function getBTCPrice() {
-  const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
-  const data = await res.json();
-  if (!data.bitcoin || typeof data.bitcoin.usd !== 'number') {
-    throw new Error('Unexpected API response structure');
+  try {
+    const res = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
+
+    if (!res.ok) throw new Error(`Failed to fetch: ${res.status}`);
+
+    const data = await res.json();
+
+    if (!data?.bitcoin?.usd) {
+      console.error('Unexpected response:', data);
+      throw new Error('Unexpected API response structure');
+    }
+
+    return data.bitcoin.usd;
+  } catch (err) {
+    console.error('Error fetching BTC price:', err.message);
+    // Фолбэк — можно вернуть цену-заглушку
+    return 12345;
   }
-  return data.bitcoin.usd;
 }
 
 app.get('/', async (req, res) => {
@@ -45,8 +57,9 @@ app.get('/', async (req, res) => {
         <p>Open this in Warpcast to make your guess!</p>
       </body>
     </html>
-  `);
-});
+    console.log('Rendering root HTML with BTC price...');
+  
+  });
 
 app.post('/frame', (req, res) => {
   res.set('Content-Type', 'text/html');
