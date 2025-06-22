@@ -57,8 +57,7 @@ app.get('/', async (req, res) => {
         <p>Open this in Warpcast to make your guess!</p>
       </body>
     </html>
-    console.log('Rendering root HTML with BTC price...');
-  
+   `);
   });
 
 app.post('/frame', (req, res) => {
