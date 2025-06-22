@@ -1,4 +1,17 @@
 {
+  "frame": {
+    "name": "NEXTDAY",
+    "version": "1",
+    "iconUrl": "https://nextday-frame.onrender.com/icon.png",
+    "homeUrl": "https://nextday-frame.onrender.com",
+    "imageUrl": "https://nextday-frame.onrender.com/image.png",
+    "splashImageUrl": "https://nextday-frame.onrender.com/splash.png",
+    "splashBackgroundColor": "#6200EA",
+    "webhookUrl": "https://nextday-frame.onrender.com/api/webhook",
+    "subtitle": "NEXTDAY",
+    "description": "Try to predict what will happen to the BTC price tomorrow",
+    "primaryCategory": "entertainment"
+  },
   "accountAssociation": {
     "header": "eyJmaWQiOjk0OTkwMSwidHlwZSI6ImN1c3RvZHkiLCJrZXkiOiIweDk3RTEyMzc4Yzk0NWRmMjAwOUFCYzVGOENBZDZGZDRmOTFjQWRjMjIifQ",
     "payload": "eyJkb21haW4iOiJuZXh0ZGF5LWZyYW1lLm9ucmVuZGVyLmNvbSJ9",
