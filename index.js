@@ -17,7 +17,7 @@ app.get('/.well-known/farcaster.json', (req, res) => {
 // Кеширование цены BTC
 let cachedBTCPrice = null;
 let lastFetchTime = 0;
-const CACHE_TTL = 60 * 1000; // 60 секунд
+const CACHE_TTL = 5 * 60 * 1000; // 5 минут
 
 async function getBTCPrice() {
   const now = Date.now();
