@@ -11,7 +11,7 @@ app.use(express.static('public'));
 
 // Редирект для Farcaster верификации
 app.get('/.well-known/farcaster.json', (req, res) => {
-  res.redirect(307, 'https://api.farcaster.xyz/miniapps/hosted-manifest/0197923c-a43a-7b7e-5a57-4e5039917150');
+  res.redirect(307, 'https://api.farcaster.xyz/miniapps/hosted-manifest/0197a116-5771-1df2-118e-c84717befb4c');
 });
 
 // Кеширование цены BTC
