@@ -43,26 +43,31 @@ async function getBTCPrice() {
 }
 
 // Главная страница с фреймом
-// ВРЕМЕННЫЙ ОТЛАДОЧНЫЙ КОД ДЛЯ ГЛАВНОЙ СТРАНИЦЫ
+// Финальная рабочая версия для главной страницы
 app.get('/', async (req, res) => {
   const btcPrice = await getBTCPrice();
   res.set('Content-Type', 'text/html');
   res.send(`
+    <!DOCTYPE html>
     <html>
       <head>
-        <meta property="og:title" content="📈 BTC Price Game" />
+        <title>NEXTDAY - BTC Price Game</title>
+        <meta property="og:title" content="📈 NEXTDAY - BTC Price Game" />
         <meta property="og:description" content="Сегодня: $${btcPrice}. Что будет завтра?" />
+        
+        <meta property="og:image" content="${process.env.BASE_URL}/image.png" />
+        <meta name="fc:frame:image" content="${process.env.BASE_URL}/image.png" />
+
         <meta name="fc:frame" content="vNext" />
-        <meta name="fc:frame:image" content="${process.env.BASE_URL}/preview.png" />
+        <meta name="fc:frame:post_url" content="${process.env.BASE_URL}/frame" />
         <meta name="fc:frame:button:1" content="Higher" />
         <meta name="fc:frame:button:2" content="Lower" />
         <meta name="fc:frame:button:3" content="Same" />
-        <meta name="fc:frame:post_url" content="${process.env.BASE_URL}/frame" />
       </head>
-      <body style="font-family: sans-serif; text-align: center; margin-top: 2em;">
-        <h1>📈 BTC Price Game</h1>
+      <body>
+        <h1>📈 NEXTDAY - BTC Price Game</h1>
         <p>Today's BTC price: <strong>$${btcPrice}</strong></p>
-        <p>Open this in Warpcast to make your guess!</p>
+        <p>Open this in a Farcaster client to play!</p>
       </body>
     </html>
   `);
