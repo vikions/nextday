@@ -6,7 +6,15 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 
+// Раздача статических файлов (image.png и др.) из папки 'public'
 app.use(express.static('public'));
+
+// --- Манифест ---
+// Эта часть нужна, если у вас НЕТ статического файла farcaster.json. 
+// Если он есть в /public/.well-known/, то этот код не выполняется. Оставляем на всякий случай.
+app.get('/.well-known/farcaster.json', (req, res) => {
+  res.redirect(307, 'https://api.farcaster.xyz/miniapps/hosted-manifest/0197a116-5771-1df2-118e-c84717befb4c');
+});
 
 // --- Получение цены (без изменений) ---
 let cachedBTCPrice = null;
@@ -32,28 +40,9 @@ async function getBTCPrice() {
   }
 }
 
-// --- ШАГ 1: Начальный фрейм (отвечает мгновенно) ---
-app.get('/', (req, res) => {
-  res.set('Content-Type', 'text/html');
-  res.send(`
-    <!DOCTYPE html>
-    <html>
-      <head>
-        <title>NEXTDAY - BTC Price Game</title>
-        <meta property="og:title" content="📈 NEXTDAY - BTC Price Game" />
-        <meta property="og:image" content="${process.env.BASE_URL}/image.png" />
-        <meta name="fc:frame:image" content="${process.env.BASE_URL}/image.png" />
-        <meta name="fc:frame" content="vNext" />
-        <meta name="fc:frame:post_url" content="${process.env.BASE_URL}/show-price" />
-        <meta name="fc:frame:button:1" content="Узнать цену и сделать прогноз" />
-      </head>
-      <body><h1>NEXTDAY - BTC Price Game</h1></body>
-    </html>
-  `);
-});
-
-// --- ШАГ 2: Показать фрейм с ценой (здесь мы ждем ответа от API) ---
-app.post('/show-price', async (req, res) => {
+// --- Главная страница с фреймом ---
+// Включает все исправления + SDK
+app.get('/', async (req, res) => {
   const btcPrice = await getBTCPrice();
   res.set('Content-Type', 'text/html');
   res.send(`
@@ -62,23 +51,32 @@ app.post('/show-price', async (req, res) => {
       <head>
         <title>NEXTDAY - BTC Price Game</title>
         <meta property="og:title" content="📈 NEXTDAY - BTC Price Game" />
+        <meta property="og:description" content="Сегодня: $${btcPrice}. Что будет завтра?" />
+        
         <meta property="og:image" content="${process.env.BASE_URL}/image.png" />
         <meta name="fc:frame:image" content="${process.env.BASE_URL}/image.png" />
+
         <meta name="fc:frame" content="vNext" />
         <meta name="fc:frame:post_url" content="${process.env.BASE_URL}/frame" />
-        <meta name="fc:frame:button:1" content="Higher ⬆️" />
-        <meta name="fc:frame:button:2" content="Lower ⬇️" />
-        <meta name="fc:frame:button:3" content="Same ➖" />
-        <meta http-equiv="refresh" content="0; url=data:text/html,
-          <meta name='fc:frame:image' content='data:image/svg+xml,<svg width=\\"1200\\" height=\\"630\\" viewBox=\\"0 0 1200 630\\" xmlns=\\"http://www.w3.org/2000/svg\\"><rect width=\\"100%\\" height=\\"100%\\" style=\\"fill:rgb(25,25,25);\\" /><text x=\\"50%\\" y=\\"50%\\" font-family=\\"monospace\\" font-size=\\"80px\\" fill=\\"white\\" text-anchor=\\"middle\\" dominant-baseline=\\"middle\\">BTC: $${btcPrice}</text></svg>' />
-        "/>
+        <meta name="fc:frame:button:1" content="Higher" />
+        <meta name="fc:frame:button:2" content="Lower" />
+        <meta name="fc:frame:button:3" content="Same" />
+
+        <script type="module">
+          import { sdk } from 'https://esm.sh/@farcaster/frame-sdk';
+          sdk.ready();
+        </script>
       </head>
-      <body><h1>Current price: $${btcPrice}</h1></body>
+      <body>
+        <h1>📈 NEXTDAY - BTC Price Game</h1>
+        <p>Today's BTC price: <strong>$${btcPrice}</strong></p>
+        <p>Open this in a Farcaster client to play!</p>
+      </body>
     </html>
   `);
 });
 
-// --- ШАГ 3: Обработка прогноза (без изменений) ---
+// --- Обработка клика по кнопкам фрейма ---
 app.post('/frame', (req, res) => {
   res.set('Content-Type', 'text/html');
   res.send(`
