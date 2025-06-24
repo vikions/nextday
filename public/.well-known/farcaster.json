@@ -2,13 +2,13 @@
   "frame": {
     "name": "NEXTDAY",
     "version": "1",
-    "iconUrl": "https://nextday-one.vercel.app//icon.png",
-    "homeUrl": "https://nextday-one.vercel.app/",
-    "imageUrl": "https://nextday-one.vercel.app//image.png",
-    "splashImageUrl": "https://nextday-one.vercel.app//splash.png",
-    "splashBackgroundColor": "#6200EA",
+    "iconUrl": "https://nextday-one.vercel.app/icon.png",
+    "homeUrl": "https://nextday-one.vercel.app",
+    "imageUrl": "https://nextday-one.vercel.app/image.png",
+    "splashImageUrl": "https://nextday-one.vercel.app/splash.png",
+    "splashBackgroundColor": "#6300EA",
     "subtitle": "NEXTDAY",
-    "description": "Guess what will happen to the BTC price tomorrow?",
+    "description": "Guess the BTC price tomorrow?",
     "primaryCategory": "education"
   },
   "accountAssociation": {
