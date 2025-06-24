@@ -2,18 +2,18 @@
   "frame": {
     "name": "NEXTDAY",
     "version": "1",
-    "iconUrl": "https://nextday-frame.onrender.com/icon.png",
-    "homeUrl": "https://nextday-frame.onrender.com",
-    "imageUrl": "https://nextday-frame.onrender.com/image.png",
-    "splashImageUrl": "https://nextday-frame.onrender.com/splash.png",
+    "iconUrl": "https://nextday-one.vercel.app//icon.png",
+    "homeUrl": "https://nextday-one.vercel.app/",
+    "imageUrl": "https://nextday-one.vercel.app//image.png",
+    "splashImageUrl": "https://nextday-one.vercel.app//splash.png",
     "splashBackgroundColor": "#6200EA",
     "subtitle": "NEXTDAY",
-    "description": "Guess the BTC price for tomorrow",
-    "primaryCategory": "entertainment"
+    "description": "Guess what will happen to the BTC price tomorrow?",
+    "primaryCategory": "education"
   },
   "accountAssociation": {
     "header": "eyJmaWQiOjk0OTkwMSwidHlwZSI6ImF1dGgiLCJrZXkiOiIweGExQjkxOWU5OWMyQWE3ZTkxNEE5NWFDQjI5RWI1MEY1MTNiNjgzNmIifQ",
-    "payload": "eyJkb21haW4iOiJuZXh0ZGF5LXRoZXRhLnZlcmNlbC5hcHAvIn0",
-    "signature": "gp4vM08TMJN+PE0X1FLCNst3FhtYBS0YEx+YBUdlLRxGPD6ojoKNJhEqkT9Y1EKkuLYq+YAFSYpI86ZV3op/Xxs="
+    "payload": "eyJkb21haW4iOiJuZXh0ZGF5LW9uZS52ZXJjZWwuYXBwLyJ9",
+    "signature": "ejim0ZQ4Ii56H33XCEarxUJZL8a5+rAD9v03OGpCsQV7PLtq1ntjIp2iEGeFKxd6rfNdahRWH2KXF4LJDaZgPBs="
   }
 }
