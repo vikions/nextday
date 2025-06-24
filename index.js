@@ -1,3 +1,7 @@
+import path from 'path';
+import { fileURLToPath } from 'url';
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
 import express from 'express';
 import dotenv from 'dotenv';
 import fetch from 'node-fetch';
@@ -7,7 +11,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 // Раздача статических файлов (image.png и др.) из папки 'public'
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 // --- Манифест ---
 // Эта часть нужна, если у вас НЕТ статического файла farcaster.json. 
