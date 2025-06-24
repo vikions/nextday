@@ -42,8 +42,8 @@ async function getBTCPrice() {
 
 // --- Главная страница с фреймом ---
 // Включает все исправления + SDK
-app.get('/', async (req, res) => {
-  const btcPrice = await getBTCPrice();
+// Финальная версия для Mini App (без кнопок на старте)
+app.get('/', (req, res) => {
   res.set('Content-Type', 'text/html');
   res.send(`
     <!DOCTYPE html>
@@ -51,17 +51,11 @@ app.get('/', async (req, res) => {
       <head>
         <title>NEXTDAY - BTC Price Game</title>
         <meta property="og:title" content="📈 NEXTDAY - BTC Price Game" />
-        <meta property="og:description" content="Сегодня: $${btcPrice}. Что будет завтра?" />
-        
         <meta property="og:image" content="${process.env.BASE_URL}/image.png" />
-        <meta name="fc:frame:image" content="${process.env.BASE_URL}/image.png" />
-
+        
         <meta name="fc:frame" content="vNext" />
-        <meta name="fc:frame:post_url" content="${process.env.BASE_URL}/frame" />
-        <meta name="fc:frame:button:1" content="Higher" />
-        <meta name="fc:frame:button:2" content="Lower" />
-        <meta name="fc:frame:button:3" content="Same" />
-
+        <meta name="fc:frame:image" content="${process.env.BASE_URL}/image.png" />
+        
         <script type="module">
           import { sdk } from 'https://esm.sh/@farcaster/frame-sdk';
           sdk.ready();
@@ -69,13 +63,11 @@ app.get('/', async (req, res) => {
       </head>
       <body>
         <h1>📈 NEXTDAY - BTC Price Game</h1>
-        <p>Today's BTC price: <strong>$${btcPrice}</strong></p>
-        <p>Open this in a Farcaster client to play!</p>
+        <p>This is a Farcaster Mini App.</p>
       </body>
     </html>
   `);
 });
-
 // --- Обработка клика по кнопкам фрейма ---
 app.post('/frame', (req, res) => {
   res.set('Content-Type', 'text/html');
