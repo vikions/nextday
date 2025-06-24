@@ -7,7 +7,6 @@
     "imageUrl": "https://nextday-frame.onrender.com/image.png",
     "splashImageUrl": "https://nextday-frame.onrender.com/splash.png",
     "splashBackgroundColor": "#6200EA",
-    "webhookUrl": "https://nextday-frame.onrender.com/api/webhook",
     "subtitle": "NEXTDAY",
     "description": "Try to predict what will happen to the BTC price tomorrow",
     "primaryCategory": "entertainment"
