@@ -8,11 +8,12 @@ const port = process.env.PORT || 3000;
 // Убедитесь, что BASE_URL установлен в настройках Vercel
 const APP_URL = process.env.BASE_URL;
 
-// Раздача статических файлов из папки 'public'
+// Раздача статических файлов (включая farcaster.json) из папки 'public'
 app.use(express.static('public'));
 
+// РЕДИРЕКТ УДАЛЕН, ТАК КАК У НАС ЕСТЬ СТАТИЧЕСКИЙ ФАЙЛ
+
 // --- Главный экран Mini App ---
-// Отвечает мгновенно, содержит только базовые интерактивные элементы.
 app.get('/', (req, res) => {
     const html = `
         <!DOCTYPE html>
