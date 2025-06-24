@@ -44,23 +44,25 @@ async function getBTCPrice() {
 
 // Главная страница с фреймом
 // ВРЕМЕННЫЙ ОТЛАДОЧНЫЙ КОД ДЛЯ ГЛАВНОЙ СТРАНИЦЫ
-app.get('/', (req, res) => {
+app.get('/', async (req, res) => {
+  const btcPrice = await getBTCPrice();
   res.set('Content-Type', 'text/html');
   res.send(`
-    <!DOCTYPE html>
     <html>
       <head>
-        <title>Frame Debug</title>
-        <meta property="og:title" content="Frame Debug" />
-        <meta property="og:image" content="${process.env.BASE_URL}/preview.png" />
-
+        <meta property="og:title" content="📈 BTC Price Game" />
+        <meta property="og:description" content="Сегодня: $${btcPrice}. Что будет завтра?" />
         <meta name="fc:frame" content="vNext" />
         <meta name="fc:frame:image" content="${process.env.BASE_URL}/preview.png" />
-        <meta name="fc:frame:button:1" content="Click me" />
+        <meta name="fc:frame:button:1" content="Higher" />
+        <meta name="fc:frame:button:2" content="Lower" />
+        <meta name="fc:frame:button:3" content="Same" />
         <meta name="fc:frame:post_url" content="${process.env.BASE_URL}/frame" />
       </head>
-      <body>
-        <h1>This is a debug frame.</h1>
+      <body style="font-family: sans-serif; text-align: center; margin-top: 2em;">
+        <h1>📈 BTC Price Game</h1>
+        <p>Today's BTC price: <strong>$${btcPrice}</strong></p>
+        <p>Open this in Warpcast to make your guess!</p>
       </body>
     </html>
   `);
