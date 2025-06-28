@@ -24,7 +24,7 @@ async function getBTCPrice() {
   }
 }
 
-// --- ШАГ 1: Начальный экран Mini App (отвечает мгновенно) ---
+// --- ШАГ 1: Начальный экран Mini App (с правильным расположением скрипта) ---
 app.get('/', (req, res) => {
     const html = `
         <!DOCTYPE html>
@@ -37,12 +37,15 @@ app.get('/', (req, res) => {
                 <meta name="fc:frame:image" content="${APP_URL}/image.png">
                 <meta name="fc:frame:post_url" content="${APP_URL}/show_price">
                 <meta name="fc:frame:button:1" content="▶️ Start Prediction">
+            </head>
+            <body>
+                <h1>NEXTDAY</h1>
+                
                 <script type="module">
                   import { sdk } from 'https://esm.sh/@farcaster/frame-sdk';
                   sdk.ready();
                 </script>
-            </head>
-            <body><h1>NEXTDAY</h1></body>
+            </body>
         </html>
     `;
     res.setHeader('Content-Type', 'text/html').status(200).send(html);
